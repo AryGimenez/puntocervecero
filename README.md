@@ -1,40 +1,69 @@
-Punto Cervecero - Maqueta Web
-Este proyecto es una maqueta de una página web de una sola página (SPA) para "Punto Cervecero", un bar con una especialización en cervezas artesanales. La aplicación fue construida utilizando React y está diseñada para ser completamente adaptable a diferentes dispositivos, incluyendo móviles y desktops.
+# React + TypeScript + Vite
 
-Características Principales
-Menú Interactivo: Una sección con pestañas para alternar entre el menú de bebidas y comidas, mostrando los precios y descripciones.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Identidad de Marca: Sección dedicada a impulsar la marca del negocio, con un eslogan y una llamada a la acción.
+Currently, two official plugins are available:
 
-Eventos Futuros: Un espacio para mostrar eventos ficticios que, en el futuro, podría ser actualizado dinámicamente con información de un usuario o una base de datos.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Horario de Atención: Información clara y visible sobre los horarios de apertura y cierre del local.
+## Expanding the ESLint configuration
 
-Botón de Chat Flotante: Un botón de acceso directo a WhatsApp para facilitar la comunicación con los clientes.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-Integración con Redes Sociales: Enlaces al perfil de Instagram del negocio en el pie de página.
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Diseño Adaptable: Estructura visualmente atractiva con una paleta de colores de tonos negros, blancos y marrones, que se adapta a cualquier tamaño de pantalla.
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
-Tecnologías Utilizadas
-React: Para la construcción de la interfaz de usuario.
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-Tailwind CSS: Para un diseño rápido y responsivo sin necesidad de archivos CSS externos.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-Cómo Usar el Código
-Este código es un componente de React de un solo archivo. Para usarlo:
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-Asegúrate de tener un entorno de React configurado (por ejemplo, usando create-react-app).
-
-Copia el contenido del archivo PuntoCervecero.jsx en el archivo principal de tu aplicación (por lo general, App.jsx o App.js).
-
-El proyecto está listo para ejecutarse y ser visto en un navegador.
-
-Próximos Pasos
-Este proyecto sirve como una base sólida para futuros desarrollos, como:
-
-Implementar la carga dinámica de eventos desde una base de datos (por ejemplo, Firestore).
-
-Añadir un sistema de autenticación de usuarios para la gestión de eventos.
-
-Integrar una galería de imágenes o un formulario de contacto.
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
